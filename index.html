@@ -118,7 +118,7 @@ dialog input:focus-visible { outline: 3px solid var(--accent); outline-offset: 1
       <div class="bar"><span id="bar"></span></div>
       <p id="count">Loading what's already taken…</p>
     </div>
-    <p class="who" id="who" hidden>Marking gifts as <strong id="who-name"></strong><span id="who-owner" hidden> (owner view)</span> · <button class="link" type="button" id="who-change">Change name</button></p>
+    <p class="who" id="who" hidden>Marking gifts as <strong id="who-name"></strong> ·<button class="link" type="button" id="who-change">Change name</button></p>
     <p class="notice" id="notice" hidden></p>
   </header>
 
@@ -160,8 +160,8 @@ dialog input:focus-visible { outline: 3px solid var(--accent); outline-offset: 1
 </dialog>
 
 <script>
-// Paste the ApiUrl output from the CloudFormation stack here (no trailing slash).
-const API_URL = "PASTE_API_URL_HERE";
+// Paste your Google Apps Script web app URL here (it ends in /exec).
+const API_URL = "https://script.google.com/macros/s/AKfycbw2Yl8bFKTBRBQjREtqQFodnfb76I7dtVUSV4rAf7pUK8eZk6BIiGYj248fQ6ubXlnc/exec";
 
 const AMAZON = "https://www.amazon.com.au/baby-reg/franca-moreno-december-2026-southbrisbane/DJIO5LMADPI";
 const ITEMS = [
@@ -205,17 +205,8 @@ function newId() {
 let guestId = store.get("registry-guest");
 if (!guestId) { guestId = newId(); store.set("registry-guest", guestId); }
 
-// Owners open the page once with ?owner=SECRET; it's remembered and removed from the address bar.
-const params = new URLSearchParams(location.search);
-if (params.get("owner")) {
-  store.set("registry-owner", params.get("owner"));
-  params.delete("owner");
-  history.replaceState(null, "", location.pathname + (params.toString() ? "?" + params : "") + location.hash);
-}
-const ownerKey = store.get("registry-owner");
-
 const configured = /^https:\/\//.test(API_URL);
-const state = { ready: false, owner: false, claims: {}, name: store.get("registry-name") || "" };
+const state = { ready: false, claims: {}, name: store.get("registry-name") || "" };
 
 let toastTimer;
 function toast(msg) {
@@ -225,9 +216,8 @@ function toast(msg) {
 function notice(msg) { const n = $("notice"); n.textContent = msg; n.hidden = !msg; }
 
 function renderWho() {
-  $("who").hidden = !state.name && !state.owner;
-  $("who-name").textContent = state.name || "(no name yet)";
-  $("who-owner").hidden = !state.owner;
+  $("who").hidden = !state.name;
+  $("who-name").textContent = state.name;
 }
 
 function askName() {
@@ -245,11 +235,12 @@ function askName() {
   });
 }
 
-function api(method, path, body) {
-  const headers = { "x-guest-id": guestId };
-  if (ownerKey) headers["x-owner-key"] = ownerKey;
-  if (body) headers["content-type"] = "application/json";
-  return fetch(API_URL.replace(/\/+$/, "") + path, { method, headers, body: body ? JSON.stringify(body) : undefined });
+// Google Apps Script answers every request with JSON; problems come back as { error }.
+async function send(action, item, name) {
+  // Sent as plain text so the browser doesn't need a CORS preflight, which Apps Script can't answer.
+  const r = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action, id: item.id, guest: guestId, name }) });
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
 }
 
 function rowFor(item) {
@@ -275,9 +266,9 @@ function rowFor(item) {
     const chip = document.createElement("span"); chip.className = "chip";
     chip.textContent = claim.mine ? "You're getting this" : "Taken by " + (claim.name || "someone");
     actions.append(chip);
-    if (claim.mine || state.owner) {
+    if (claim.mine) {
       const undo = document.createElement("button"); undo.className = "btn btn-quiet"; undo.type = "button";
-      undo.id = "undo-" + item.id; undo.textContent = claim.mine ? "Undo" : "Clear";
+      undo.id = "undo-" + item.id; undo.textContent = "Undo";
       undo.addEventListener("click", () => unclaim(item, undo));
       actions.append(undo);
     }
@@ -302,11 +293,10 @@ function render() {
 
 async function load() {
   try {
-    const r = await api("GET", "/claims");
+    const r = await fetch(API_URL + "?guest=" + encodeURIComponent(guestId));
     if (!r.ok) throw new Error(r.status);
     const data = await r.json();
     state.claims = data.claims || {};
-    state.owner = !!data.owner;
     state.ready = true;
     notice("");
   } catch (e) {
@@ -321,9 +311,9 @@ async function claimItem(item, btn) {
   if (!who) return;
   btn.disabled = true;
   try {
-    const r = await api("POST", "/claims/" + item.id, { name: who });
-    if (r.status === 409) toast("Someone has just taken this one.");
-    else if (!r.ok) throw new Error(r.status);
+    const res = await send("claim", item, who);
+    if (res.error === "taken") toast("Someone has just taken this one.");
+    else if (res.error) throw new Error(res.error);
     else toast("Thanks! It's marked as yours.");
   } catch (e) {
     toast("That didn't save. Please try again in a moment.");
@@ -334,8 +324,8 @@ async function claimItem(item, btn) {
 async function unclaim(item, btn) {
   btn.disabled = true;
   try {
-    const r = await api("DELETE", "/claims/" + item.id);
-    if (!r.ok) throw new Error(r.status);
+    const res = await send("unclaim", item);
+    if (res.error) throw new Error(res.error);
     toast("Unmarked. Someone else can take it now.");
   } catch (e) {
     toast("That didn't save. Please try again in a moment.");
@@ -351,8 +341,8 @@ if (!configured) {
   notice("This registry isn't connected yet, so gifts can't be marked.");
 } else {
   load();
-  // Refresh every 20 seconds while the page is open, and whenever someone comes back to the tab.
-  setInterval(() => { if (!document.hidden) load(); }, 20000);
+  // Refresh every 30 seconds while the page is open, and whenever someone comes back to the tab.
+  setInterval(() => { if (!document.hidden) load(); }, 30000);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); });
 }
 </script>
