@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>December Baby Registry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one calm column, a short header with progress, then two store groups of claimable rows. Jacaranda purple for actions (Brisbane's December bloom), eucalyptus green for "taken". */
+:root {
+  --bg: #f7f6fa;
+  --surface: #ffffff;
+  --fg: #22202b;
+  --muted: #6b6779;
+  --line: #e4e1ec;
+  --accent: #6a52b8;
+  --accent-ink: #ffffff;
+  --accent-soft: #ece8f8;
+  --taken: #3f7a5c;
+  --taken-soft: #e5f1ea;
+  --warn: #9a5b12;
+  --font-display: "Young Serif", Georgia, "Times New Roman", serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15131b; --surface: #1e1b27; --fg: #ece9f3; --muted: #a29db2; --line: #322e3f;
+    --accent: #a993f0; --accent-ink: #17131f; --accent-soft: #2a2440;
+    --taken: #7fc29d; --taken-soft: #1d2e25; --warn: #e2a65a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15131b; --surface: #1e1b27; --fg: #ece9f3; --muted: #a29db2; --line: #322e3f;
+  --accent: #a993f0; --accent-ink: #17131f; --accent-soft: #2a2440;
+  --taken: #7fc29d; --taken-soft: #1d2e25; --warn: #e2a65a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: calc(32px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+}
+.wrap { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
+header { display: flex; flex-direction: column; gap: 12px; }
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(32px, 7vw, 46px); line-height: 1.1; margin: 0; text-wrap: balance; }
+.lede { margin: 0; color: var(--muted); max-width: 60ch; }
+.progress { display: flex; flex-direction: column; gap: 8px; }
+.bar { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; }
+.bar > span { display: block; height: 100%; width: 0; background: var(--taken); transition: width .4s ease; }
+.progress p { margin: 0; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.notice { font-size: 14px; padding: 12px 14px; border-radius: 10px; background: var(--accent-soft); color: var(--fg); margin: 0; }
+.who { margin: 0; font-size: 14px; color: var(--muted); }
+.link { background: none; border: 0; padding: 0; font: inherit; color: var(--accent); font-weight: 600; cursor: pointer; text-decoration: underline; }
+section { display: flex; flex-direction: column; gap: 14px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px; }
+h2 { font-family: var(--font-display); font-weight: 400; font-size: 24px; margin: 0; }
+.sec-head p { margin: 4px 0 0; font-size: 14px; color: var(--muted); max-width: 52ch; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  font: 600 14px/1 var(--font-body); padding: 11px 16px; border-radius: 10px;
+  border: 1px solid transparent; cursor: pointer; text-decoration: none; white-space: nowrap;
+}
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-ghost { background: transparent; color: var(--accent); border-color: var(--line); }
+.btn-quiet { background: transparent; color: var(--muted); padding: 8px 10px; font-weight: 500; }
+.btn:focus-visible, .link:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+ul.items { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+li.item { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; padding: 16px 18px; border-top: 1px solid var(--line); }
+li.item:first-child { border-top: 0; }
+.info { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.name { font-weight: 600; }
+.desc { font-size: 14px; color: var(--muted); }
+.meta { font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; margin-top: 4px; }
+.price { font-weight: 600; font-variant-numeric: tabular-nums; }
+.store { color: var(--accent); font-weight: 500; text-decoration: none; }
+.store:hover { text-decoration: underline; }
+.actions { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 99px; background: var(--taken-soft); color: var(--taken); }
+.chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+li.item.taken .name { text-decoration: line-through; text-decoration-color: var(--muted); }
+li.item.taken .desc, li.item.taken .meta { opacity: .7; }
+footer { font-size: 13px; color: var(--muted); }
+#toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px; max-width: calc(100% - 32px); }
+dialog { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--fg); padding: 22px; width: min(400px, calc(100% - 32px)); }
+dialog::backdrop { background: rgb(0 0 0 / .4); }
+dialog form { display: flex; flex-direction: column; gap: 12px; margin: 0; }
+dialog p { margin: 0; font-size: 14px; color: var(--muted); }
+dialog input { font: 16px var(--font-body); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+dialog input:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+.dlg-actions { display: flex; justify-content: flex-end; gap: 8px; }
+@media (max-width: 520px) {
+  li.item { grid-template-columns: 1fr; }
+  .actions { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) { .bar > span { transition: none; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Due 8 December 2026 · South Brisbane</span>
+    <h1>Our December baby registry</h1>
+    <p class="lede">Thank you for helping us get ready. When you choose a gift, tap <strong>I'm getting this</strong> so nobody doubles up.</p>
+    <div class="progress" aria-live="polite">
+      <div class="bar"><span id="bar"></span></div>
+      <p id="count">Loading what's already taken…</p>
+    </div>
+    <p class="who" id="who" hidden>Marking gifts as <strong id="who-name"></strong><span id="who-owner" hidden> (owner view)</span> · <button class="link" type="button" id="who-change">Change name</button></p>
+    <p class="notice" id="notice" hidden></p>
+  </header>
+
+  <section aria-labelledby="h-other">
+    <div class="sec-head">
+      <div>
+        <h2 id="h-other">From other stores</h2>
+        <p>Buy these straight from the store linked on each item.</p>
+      </div>
+    </div>
+    <ul class="items" id="list-other"></ul>
+  </section>
+
+  <section aria-labelledby="h-amazon">
+    <div class="sec-head">
+      <div>
+        <h2 id="h-amazon">On our Amazon registry</h2>
+        <p>Buy these through our Amazon registry so Amazon ticks them off and delivers to us. Please mark them here too.</p>
+      </div>
+      <a class="btn btn-primary" id="amazon-btn" href="https://www.amazon.com.au/baby-reg/franca-moreno-december-2026-southbrisbane/DJIO5LMADPI" target="_blank" rel="noopener">Open Amazon registry</a>
+    </div>
+    <ul class="items" id="list-amazon"></ul>
+  </section>
+
+  <footer>Prices checked 19 October 2026 and may change.</footer>
+</div>
+<div id="toast" role="status" hidden></div>
+
+<dialog id="name-dialog" aria-labelledby="name-title">
+  <form method="dialog">
+    <h2 id="name-title">What's your name?</h2>
+    <p>So we know who's getting what. We'll remember it on this device.</p>
+    <input id="name-input" required maxlength="60" autocomplete="name" aria-labelledby="name-title">
+    <div class="dlg-actions">
+      <button class="btn btn-quiet" value="cancel" formnovalidate>Cancel</button>
+      <button class="btn btn-primary" value="ok">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+// Paste the ApiUrl output from the CloudFormation stack here (no trailing slash).
+const API_URL = "PASTE_API_URL_HERE";
+
+const AMAZON = "https://www.amazon.com.au/baby-reg/franca-moreno-december-2026-southbrisbane/DJIO5LMADPI";
+const ITEMS = [
+  { id: "snuzpod-studio", group: "other", name: "SnuzPod Studio Bedside Bassinet, Rio Walnut", desc: "Beech-wood bedside sleeper with zip-down wall, mattress included, 3-year warranty", price: "$379", store: "Baby Bunting", url: "https://www.babybunting.com.au/product/snuzpod-studio-bassinet-sleeper-rio-137810" },
+  { id: "maxicosi-iora-lux", group: "other", name: "Maxi-Cosi Iora Lux Bedside Sleeper, Beyond Beige", desc: "Mesh bedside sleeper that slides up to the bed, with storage basket and travel bag", price: "$399", store: "Baby Bunting", url: "https://www.babybunting.com.au/product/maxi-cosi-iora-lux-bedside-sleeper-beyond-beige-135543" },
+  { id: "maxicosi-kori", group: "other", name: "Maxi-Cosi Kori Rocker", desc: "Baby rocker and seat with toy arch", price: "$179", store: "Maxi-Cosi", url: "https://www.maxi-cosi.com.au/kori-rocker" },
+  { id: "jengo-relax", group: "other", name: "Jengo Relax Bouncer, Cashmere", desc: "Baby-powered bouncer with toy bar, folds flat", price: "$152 (sale until 1 Nov)", store: "Baby Bunting", url: "https://www.babybunting.com.au/product/jengo-relax-bouncer-cashmere-131056" },
+  { id: "snuggle-me", group: "other", name: "Snuggle Me Organic Infant Lounger", desc: "Organic cotton lounger for supervised awake time", price: "Price TBC", store: "Snuggle Me Organic", url: "https://snugglemeorganic.com/collections/snuggle-me-organic-infant" },
+  { id: "chicco-cuddle-bubble", group: "amazon", name: "Chicco Cuddle & Bubble", desc: "Baby bath and changing table in one", price: "$399.95" },
+  { id: "babysense-monitor", group: "amazon", name: "Babysense 5\" HD Video Baby Monitor", desc: "Non-WiFi monitor with pan-tilt camera, night vision and sound machine", price: "$159.98" },
+  { id: "momcozy-warmer", group: "amazon", name: "Momcozy Portable Bottle Warmer", desc: "Rechargeable warmer for milk on the go", price: "$135.99" },
+  { id: "momcozy-purehug", group: "amazon", name: "Momcozy PureHug Baby Carrier", desc: "Ergonomic carrier, newborn to toddler", price: "$120.00" },
+  { id: "advwin-fan", group: "amazon", name: "Advwin Bladeless Tower Fan", desc: "Quiet fan with air purifier and remote", price: "$119.99" },
+  { id: "momcozy-cozypro", group: "amazon", name: "Momcozy CozyPro Nursing Pillow", desc: "Memory-foam breastfeeding pillow with back and arm support", price: "$112.00" },
+  { id: "snotty-boss", group: "amazon", name: "Snotty Boss Nasal Aspirator", desc: "Electric baby nose cleaner kit", price: "$106.90" },
+  { id: "aden-blanket", group: "amazon", name: "Aden + Anais Muslin Blanket", desc: "Soft cotton blanket for cuddles and tummy time", price: "$104.57" },
+  { id: "rockit", group: "amazon", name: "Rockit Pram Rocker", desc: "Rechargeable rocker that clips onto the pram", price: "$95.00" },
+  { id: "thyseed-bottles", group: "amazon", name: "Thyseed Anti-Colic Glass Bottles, 150ml", desc: "Glass bottles with breast-like slow-flow teat, 2-pack", price: "$81.99" },
+  { id: "aden-burpy", group: "amazon", name: "Aden + Anais Burpy Bibs", desc: "Muslin burp cloth and bib, 2-pack", price: "$58.71" },
+  { id: "swaddle-1", group: "amazon", name: "Love to Dream Swaddle Up Lite, Newborn (1 of 2)", desc: "Lightweight summer swaddle, 0.2 TOG", price: "$49.95" },
+  { id: "swaddle-2", group: "amazon", name: "Love to Dream Swaddle Up Lite, Newborn (2 of 2)", desc: "Lightweight summer swaddle, 0.2 TOG", price: "$49.95" },
+  { id: "momcozy-organiser", group: "amazon", name: "Momcozy Stroller Organiser", desc: "Pram bag with cup holder and phone pouch", price: "$42.99" },
+  { id: "haakaa-trimmer", group: "amazon", name: "haakaa Electric Nail Trimmer", desc: "Gentle baby nail file with light", price: "$28.29" },
+  { id: "bubba-blue-towel", group: "amazon", name: "Bubba Blue Koala Hooded Towel", desc: "Hooded baby bath towel", price: "$25.46" },
+  { id: "muslin-bibs", group: "amazon", name: "Organic Muslin Bibs", desc: "Drool and teething bibs, 6-pack", price: "$20.19" },
+  { id: "nursing-cover", group: "amazon", name: "Blissful Diary Nursing Cover", desc: "Breathable muslin breastfeeding cover", price: "$19.99" },
+  { id: "milton", group: "amazon", name: "Milton Bottle Cleaner", desc: "Plant-based bottle wash, 500ml 2-pack", price: "$11.98" }
+];
+
+const $ = (id) => document.getElementById(id);
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} }
+};
+function newId() {
+  if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 12);
+}
+
+// Each device gets a random guest id so people can undo their own claims.
+let guestId = store.get("registry-guest");
+if (!guestId) { guestId = newId(); store.set("registry-guest", guestId); }
+
+// Owners open the page once with ?owner=SECRET; it's remembered and removed from the address bar.
+const params = new URLSearchParams(location.search);
+if (params.get("owner")) {
+  store.set("registry-owner", params.get("owner"));
+  params.delete("owner");
+  history.replaceState(null, "", location.pathname + (params.toString() ? "?" + params : "") + location.hash);
+}
+const ownerKey = store.get("registry-owner");
+
+const configured = /^https:\/\//.test(API_URL);
+const state = { ready: false, owner: false, claims: {}, name: store.get("registry-name") || "" };
+
+let toastTimer;
+function toast(msg) {
+  const t = $("toast"); t.textContent = msg; t.hidden = false;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 3200);
+}
+function notice(msg) { const n = $("notice"); n.textContent = msg; n.hidden = !msg; }
+
+function renderWho() {
+  $("who").hidden = !state.name && !state.owner;
+  $("who-name").textContent = state.name || "(no name yet)";
+  $("who-owner").hidden = !state.owner;
+}
+
+function askName() {
+  const d = $("name-dialog"), input = $("name-input");
+  input.value = state.name;
+  d.returnValue = "";
+  return new Promise((resolve) => {
+    d.addEventListener("close", () => {
+      const v = input.value.trim().slice(0, 60);
+      if (d.returnValue === "ok" && v) {
+        state.name = v; store.set("registry-name", v); renderWho(); resolve(v);
+      } else resolve(null);
+    }, { once: true });
+    d.showModal();
+  });
+}
+
+function api(method, path, body) {
+  const headers = { "x-guest-id": guestId };
+  if (ownerKey) headers["x-owner-key"] = ownerKey;
+  if (body) headers["content-type"] = "application/json";
+  return fetch(API_URL.replace(/\/+$/, "") + path, { method, headers, body: body ? JSON.stringify(body) : undefined });
+}
+
+function rowFor(item) {
+  const li = document.createElement("li");
+  li.className = "item";
+  const claim = state.claims[item.id];
+  if (claim) li.classList.add("taken");
+
+  const info = document.createElement("div"); info.className = "info";
+  const name = document.createElement("span"); name.className = "name"; name.textContent = item.name;
+  const desc = document.createElement("span"); desc.className = "desc"; desc.textContent = item.desc;
+  const meta = document.createElement("div"); meta.className = "meta";
+  const price = document.createElement("span"); price.className = "price"; price.textContent = item.price;
+  const link = document.createElement("a"); link.className = "store";
+  link.href = item.group === "amazon" ? AMAZON : item.url;
+  link.target = "_blank"; link.rel = "noopener";
+  link.textContent = item.group === "amazon" ? "Buy on our Amazon registry" : "Buy at " + item.store;
+  meta.append(price, link);
+  info.append(name, desc, meta);
+
+  const actions = document.createElement("div"); actions.className = "actions";
+  if (claim) {
+    const chip = document.createElement("span"); chip.className = "chip";
+    chip.textContent = claim.mine ? "You're getting this" : "Taken by " + (claim.name || "someone");
+    actions.append(chip);
+    if (claim.mine || state.owner) {
+      const undo = document.createElement("button"); undo.className = "btn btn-quiet"; undo.type = "button";
+      undo.id = "undo-" + item.id; undo.textContent = claim.mine ? "Undo" : "Clear";
+      undo.addEventListener("click", () => unclaim(item, undo));
+      actions.append(undo);
+    }
+  } else {
+    const btn = document.createElement("button"); btn.className = "btn btn-ghost"; btn.type = "button";
+    btn.id = "claim-" + item.id; btn.textContent = "I'm getting this";
+    btn.disabled = !state.ready;
+    btn.addEventListener("click", () => claimItem(item, btn));
+    actions.append(btn);
+  }
+  li.append(info, actions);
+  return li;
+}
+
+function render() {
+  $("list-other").replaceChildren(...ITEMS.filter(i => i.group === "other").map(rowFor));
+  $("list-amazon").replaceChildren(...ITEMS.filter(i => i.group === "amazon").map(rowFor));
+  const taken = ITEMS.filter(i => state.claims[i.id]).length;
+  $("bar").style.width = (taken / ITEMS.length * 100) + "%";
+  if (state.ready) $("count").textContent = taken + " of " + ITEMS.length + " gifts taken";
+}
+
+async function load() {
+  try {
+    const r = await api("GET", "/claims");
+    if (!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    state.claims = data.claims || {};
+    state.owner = !!data.owner;
+    state.ready = true;
+    notice("");
+  } catch (e) {
+    if (!state.ready) notice("The list of taken gifts couldn't load. Refresh the page to try again.");
+  }
+  renderWho();
+  render();
+}
+
+async function claimItem(item, btn) {
+  const who = state.name || await askName();
+  if (!who) return;
+  btn.disabled = true;
+  try {
+    const r = await api("POST", "/claims/" + item.id, { name: who });
+    if (r.status === 409) toast("Someone has just taken this one.");
+    else if (!r.ok) throw new Error(r.status);
+    else toast("Thanks! It's marked as yours.");
+  } catch (e) {
+    toast("That didn't save. Please try again in a moment.");
+  }
+  await load();
+}
+
+async function unclaim(item, btn) {
+  btn.disabled = true;
+  try {
+    const r = await api("DELETE", "/claims/" + item.id);
+    if (!r.ok) throw new Error(r.status);
+    toast("Unmarked. Someone else can take it now.");
+  } catch (e) {
+    toast("That didn't save. Please try again in a moment.");
+  }
+  await load();
+}
+
+$("who-change").addEventListener("click", () => { askName(); });
+
+render();
+if (!configured) {
+  $("count").textContent = ITEMS.length + " gifts on the list";
+  notice("This registry isn't connected yet, so gifts can't be marked.");
+} else {
+  load();
+  // Refresh every 20 seconds while the page is open, and whenever someone comes back to the tab.
+  setInterval(() => { if (!document.hidden) load(); }, 20000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); });
+}
+</script>
+</body>
+</html>
