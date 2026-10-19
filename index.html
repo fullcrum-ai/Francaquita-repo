@@ -3,123 +3,273 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#e9c46a">
 <title>December Baby Registry</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght,SOFT@9..144,400..600,100&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
-/* Layout: one calm column, a short header with progress, then two store groups of claimable rows. Jacaranda purple for actions (Brisbane's December bloom), eucalyptus green for "taken". */
+/* Layout: one calm column like a storybook page. Honey drips across the top, a hero card with a honey pot, balloon and bees, then two store groups of claimable rows. Golden Hour palette: soft gold for actions and honey, blush pink for washes, the pot and balloon, sage for "taken". */
 :root {
-  --bg: #f7f6fa;
-  --surface: #ffffff;
-  --fg: #22202b;
-  --muted: #6b6779;
-  --line: #e4e1ec;
-  --accent: #6a52b8;
-  --accent-ink: #ffffff;
-  --accent-soft: #ece8f8;
-  --taken: #3f7a5c;
-  --taken-soft: #e5f1ea;
+  --bg: #fbf3ee;
+  --surface: #fffaf7;
+  --fg: #3d2a2c;
+  --muted: #7d6262;
+  --line: #f0dcd6;
+  --honey: #e9c46a;
+  --honey-deep: #c99a3e;
+  --honey-soft: #f8ecd2;
+  --blush: #f2c4c4;
+  --blush-soft: #fbe6e3;
+  --accent: #a3525a;
+  --accent-ink: #3d2a2c;
+  --taken: #5e7a4c;
+  --taken-soft: #e9efdf;
+  --red: #e79aa5;
+  --pot: #dba6a2;
+  --pot-deep: #b97d7a;
+  --label: #fffaf5;
+  --comb: rgb(201 154 62 / .15);
+  --shadow: rgb(150 90 80 / .22);
   --warn: #9a5b12;
-  --font-display: "Young Serif", Georgia, "Times New Roman", serif;
-  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-script: "Caveat", "Segoe Print", cursive;
   color-scheme: light;
 }
+/* Dark: golden hour at dusk. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #15131b; --surface: #1e1b27; --fg: #ece9f3; --muted: #a29db2; --line: #322e3f;
-    --accent: #a993f0; --accent-ink: #17131f; --accent-soft: #2a2440;
-    --taken: #7fc29d; --taken-soft: #1d2e25; --warn: #e2a65a;
+    --bg: #1f1719; --surface: #2b2023; --fg: #f6e9e6; --muted: #c4aaa8; --line: #433133;
+    --honey: #e6be66; --honey-deep: #b48a3a; --honey-soft: #3a2e1c;
+    --blush: #b8737c; --blush-soft: #3a2428;
+    --accent: #f0b6bd; --accent-ink: #2b1d14;
+    --taken: #a8c28f; --taken-soft: #26301f; --red: #e597a2;
+    --pot: #c48886; --pot-deep: #9b6463; --label: #f7ece8;
+    --comb: rgb(230 190 102 / .07); --shadow: rgb(0 0 0 / .5); --warn: #e2a65a;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #15131b; --surface: #1e1b27; --fg: #ece9f3; --muted: #a29db2; --line: #322e3f;
-  --accent: #a993f0; --accent-ink: #17131f; --accent-soft: #2a2440;
-  --taken: #7fc29d; --taken-soft: #1d2e25; --warn: #e2a65a;
+  --bg: #1f1719; --surface: #2b2023; --fg: #f6e9e6; --muted: #c4aaa8; --line: #433133;
+  --honey: #e6be66; --honey-deep: #b48a3a; --honey-soft: #3a2e1c;
+  --blush: #b8737c; --blush-soft: #3a2428;
+  --accent: #f0b6bd; --accent-ink: #2b1d14;
+  --taken: #a8c28f; --taken-soft: #26301f; --red: #e597a2;
+  --pot: #c48886; --pot-deep: #9b6463; --label: #f7ece8;
+  --comb: rgb(230 190 102 / .07); --shadow: rgb(0 0 0 / .5); --warn: #e2a65a;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body {
   margin: 0;
-  background: var(--bg); color: var(--fg);
+  background:
+    radial-gradient(720px 420px at 0 0, var(--honey-soft), transparent 70%),
+    radial-gradient(620px 380px at 100% 260px, var(--blush-soft), transparent 70%),
+    var(--bg);
+  background-repeat: no-repeat;
+  color: var(--fg);
   font-family: var(--font-body); font-size: 16px; line-height: 1.5;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-top: calc(32px + env(safe-area-inset-top, 0px));
+  padding-top: calc(100px + env(safe-area-inset-top, 0px));
   padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
 }
-.wrap { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
-header { display: flex; flex-direction: column; gap: 12px; }
-.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
-h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(32px, 7vw, 46px); line-height: 1.1; margin: 0; text-wrap: balance; }
+/* Faint honeycomb behind the top of the page, fading out as you scroll. */
+body::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 680px; z-index: -1; pointer-events: none;
+  background: var(--comb);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E"), linear-gradient(#000 30%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E"), linear-gradient(#000 30%, transparent);
+  mask-composite: intersect;
+  -webkit-mask-size: 56px 100px, 100% 100%; mask-size: 56px 100px, 100% 100%;
+  -webkit-mask-repeat: repeat, no-repeat; mask-repeat: repeat, no-repeat;
+}
+.drip { position: absolute; top: 0; left: 0; width: 100%; height: 84px; pointer-events: none; }
+.drip-honey { fill: var(--honey); }
+.drip-shade { fill: var(--honey-deep); }
+
+.wrap { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 36px; }
+header.hero {
+  position: relative;
+  display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 16px 24px; align-items: center;
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: 28px;
+  padding: 28px 28px 24px;
+  box-shadow: 0 22px 44px -30px var(--shadow);
+}
+.hero-text { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.hero-art { width: 200px; }
+.hero-art svg { display: block; width: 100%; height: auto; overflow: visible; }
+.hero-status { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 12px; }
+.script { margin: 0; font-family: var(--font-script); font-weight: 700; font-size: 30px; line-height: 1; color: var(--accent); transform: rotate(-2deg); transform-origin: left center; }
+h1 { font-family: var(--font-display); font-variation-settings: "SOFT" 100; font-weight: 600; font-size: clamp(32px, 7vw, 46px); line-height: 1.08; margin: 0; text-wrap: balance; }
+.eyebrow { font-size: 14px; font-weight: 700; color: var(--accent); }
 .lede { margin: 0; color: var(--muted); max-width: 60ch; }
+
 .progress { display: flex; flex-direction: column; gap: 8px; }
-.bar { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; }
-.bar > span { display: block; height: 100%; width: 0; background: var(--taken); transition: width .4s ease; }
-.progress p { margin: 0; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.notice { font-size: 14px; padding: 12px 14px; border-radius: 10px; background: var(--accent-soft); color: var(--fg); margin: 0; }
+.bar { position: relative; height: 16px; margin-right: 16px; border-radius: 99px; background: var(--blush-soft); border: 1.5px solid var(--line); }
+.bar > span { position: relative; display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, var(--blush), var(--honey)); transition: width .6s ease; }
+.bar > span::after {
+  content: ""; position: absolute; right: -16px; top: 50%; width: 30px; height: 24px; transform: translateY(-60%);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 32'%3E%3Cellipse cx='16' cy='9' rx='6.5' ry='8.5' transform='rotate(-22 16 9)' fill='%23fff' fill-opacity='.85' stroke='%233b2a1a' stroke-width='1.3'/%3E%3Cellipse cx='24' cy='9' rx='5.5' ry='7.5' transform='rotate(22 24 9)' fill='%23fff' fill-opacity='.85' stroke='%233b2a1a' stroke-width='1.3'/%3E%3Cpath d='M7 20 L2.5 21 L7 22 Z' fill='%233b2a1a'/%3E%3Cellipse cx='20' cy='20' rx='13' ry='9' fill='%23f6c445' stroke='%233b2a1a' stroke-width='1.5'/%3E%3Cpath d='M16 12 Q14 20 16 28 M23 11.5 Q21 20 23 28.5' fill='none' stroke='%233b2a1a' stroke-width='3'/%3E%3Ccircle cx='29.5' cy='18' r='1.6' fill='%233b2a1a'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.progress p { margin: 0; font-size: 14px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.notice { font-size: 14px; padding: 12px 14px; border-radius: 12px; background: var(--blush-soft); color: var(--fg); margin: 0; }
 .who { margin: 0; font-size: 14px; color: var(--muted); }
-.link { background: none; border: 0; padding: 0; font: inherit; color: var(--accent); font-weight: 600; cursor: pointer; text-decoration: underline; }
+.link { background: none; border: 0; padding: 0; font: inherit; color: var(--accent); font-weight: 700; cursor: pointer; text-decoration: underline; }
+
 section { display: flex; flex-direction: column; gap: 14px; }
 .sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px; }
-h2 { font-family: var(--font-display); font-weight: 400; font-size: 24px; margin: 0; }
+h2 { font-family: var(--font-display); font-variation-settings: "SOFT" 100; font-weight: 600; font-size: 25px; margin: 0; }
+.sec-head h2 { display: flex; align-items: center; gap: 10px; }
+.sec-head h2::before { content: ""; flex: none; width: 20px; height: 22px; background: var(--honey); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
 .sec-head p { margin: 4px 0 0; font-size: 14px; color: var(--muted); max-width: 52ch; }
+
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  font: 600 14px/1 var(--font-body); padding: 11px 16px; border-radius: 10px;
-  border: 1px solid transparent; cursor: pointer; text-decoration: none; white-space: nowrap;
+  font: 700 14px/1 var(--font-body); padding: 11px 18px; border-radius: 99px;
+  border: 1.5px solid transparent; cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: background-color .15s ease, transform .1s ease, box-shadow .1s ease;
 }
-.btn-primary { background: var(--accent); color: var(--accent-ink); }
-.btn-ghost { background: transparent; color: var(--accent); border-color: var(--line); }
-.btn-quiet { background: transparent; color: var(--muted); padding: 8px 10px; font-weight: 500; }
-.btn:focus-visible, .link:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.btn-primary { background: var(--honey); color: var(--accent-ink); border-color: var(--honey-deep); box-shadow: 0 3px 0 var(--honey-deep); }
+.btn-primary:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--honey-deep); }
+.btn-ghost { background: var(--surface); color: var(--fg); border-color: var(--honey-deep); }
+.btn-ghost:hover:not([disabled]) { background: var(--honey-soft); }
+.btn-quiet { background: transparent; color: var(--muted); padding: 8px 10px; font-weight: 600; }
+.btn:focus-visible, .link:focus-visible { outline: 3px solid var(--honey-deep); outline-offset: 2px; }
 .btn[disabled] { opacity: .5; cursor: not-allowed; }
-ul.items { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
-li.item { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; padding: 16px 18px; border-top: 1px solid var(--line); }
+
+ul.items { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1.5px solid var(--line); border-radius: 20px; box-shadow: 0 18px 36px -30px var(--shadow); overflow: hidden; }
+li.item { display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; padding: 16px 20px; border-top: 1.5px dashed var(--line); transition: background-color .15s ease; }
 li.item:first-child { border-top: 0; }
+li.item:not(.taken):hover { background: color-mix(in srgb, var(--blush-soft) 60%, transparent); }
 .info { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.name { font-weight: 600; }
+.name { font-weight: 700; }
 .desc { font-size: 14px; color: var(--muted); }
 .meta { font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; margin-top: 4px; }
-.price { font-weight: 600; font-variant-numeric: tabular-nums; }
-.store { color: var(--accent); font-weight: 500; text-decoration: none; }
+.price { font-weight: 800; font-variant-numeric: tabular-nums; }
+.store { color: var(--accent); font-weight: 600; text-decoration: none; }
 .store:hover { text-decoration: underline; }
 .actions { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 99px; background: var(--taken-soft); color: var(--taken); }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 6px 11px; border-radius: 99px; background: var(--taken-soft); color: var(--taken); }
 .chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
 li.item.taken .name { text-decoration: line-through; text-decoration-color: var(--muted); }
 li.item.taken .desc, li.item.taken .meta { opacity: .7; }
-footer { font-size: 13px; color: var(--muted); }
-#toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px; max-width: calc(100% - 32px); }
-dialog { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--fg); padding: 22px; width: min(400px, calc(100% - 32px)); }
-dialog::backdrop { background: rgb(0 0 0 / .4); }
+
+footer { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; font-size: 13px; color: var(--muted); }
+footer p { margin: 0; }
+footer .made { font-family: var(--font-script); font-weight: 700; font-size: 24px; color: var(--accent); }
+#toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--fg); color: var(--bg); padding: 10px 18px; border-radius: 99px; font-size: 14px; font-weight: 600; max-width: calc(100% - 32px); }
+dialog { border: 1.5px solid var(--line); border-radius: 22px; background: var(--surface); color: var(--fg); padding: 24px; width: min(400px, calc(100% - 32px)); }
+dialog::backdrop { background: rgb(40 25 10 / .45); }
 dialog form { display: flex; flex-direction: column; gap: 12px; margin: 0; }
 dialog p { margin: 0; font-size: 14px; color: var(--muted); }
-dialog input { font: 16px var(--font-body); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
-dialog input:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+dialog input { font: 16px var(--font-body); padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--bg); color: var(--fg); }
+dialog input:focus-visible { outline: 3px solid var(--honey-deep); outline-offset: 1px; }
 .dlg-actions { display: flex; justify-content: flex-end; gap: 8px; }
+
+/* Hero illustration */
+.hero-art .pot { fill: var(--pot); }
+.hero-art .pot-rim { fill: var(--pot-deep); }
+.hero-art .hny { fill: var(--honey); }
+.hero-art .label { fill: var(--label); stroke: var(--pot-deep); stroke-width: 1.2; }
+.hero-art .label-text { font-family: var(--font-script); font-weight: 700; font-size: 19px; fill: #3b2a1a; }
+.hero-art .balloon-body { fill: var(--red); }
+.hero-art .string { fill: none; stroke: var(--muted); stroke-width: 1.3; }
+.hero-art .flight { fill: none; stroke: var(--muted); stroke-width: 1.4; stroke-dasharray: 2 5; stroke-linecap: round; opacity: .7; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+.bee-a { animation: bob 2.8s ease-in-out infinite; }
+.bee-b { animation: bob 3.4s ease-in-out -1.2s infinite; }
+.bee-c { animation: bob 3s ease-in-out -.6s infinite; }
+.balloon { transform-origin: 62px 178px; animation: sway 6s ease-in-out infinite; }
+
+@media (max-width: 600px) {
+  header.hero { grid-template-columns: 1fr; padding: 20px 18px 20px; border-radius: 24px; }
+  .hero-art { order: -1; width: 170px; justify-self: center; }
+}
 @media (max-width: 520px) {
-  li.item { grid-template-columns: 1fr; }
+  li.item { grid-template-columns: 1fr; padding: 16px; }
   .actions { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
 }
-@media (prefers-reduced-motion: reduce) { .bar > span { transition: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .bar > span, .btn, li.item { transition: none; }
+  .bee-a, .bee-b, .bee-c, .balloon { animation: none; }
+}
 </style>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bee" viewBox="0 0 40 32">
+    <ellipse cx="16" cy="9" rx="6.5" ry="8.5" transform="rotate(-22 16 9)" fill="#fff" fill-opacity=".85" stroke="#3b2a1a" stroke-width="1.3"/>
+    <ellipse cx="24" cy="9" rx="5.5" ry="7.5" transform="rotate(22 24 9)" fill="#fff" fill-opacity=".85" stroke="#3b2a1a" stroke-width="1.3"/>
+    <path d="M7 20 L2.5 21 L7 22 Z" fill="#3b2a1a"/>
+    <ellipse cx="20" cy="20" rx="13" ry="9" fill="#f6c445" stroke="#3b2a1a" stroke-width="1.5"/>
+    <path d="M16 12 Q14 20 16 28 M23 11.5 Q21 20 23 28.5" fill="none" stroke="#3b2a1a" stroke-width="3"/>
+    <circle cx="29.5" cy="18" r="1.6" fill="#3b2a1a"/>
+    <path d="M28.5 23 q2 1.6 3.8 0" fill="none" stroke="#3b2a1a" stroke-width="1.2" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<svg class="drip" aria-hidden="true">
+  <defs>
+    <pattern id="drip-tile" width="300" height="84" patternUnits="userSpaceOnUse">
+      <path class="drip-shade" transform="translate(0 4)" d="M0 0 H300 V26 C292 26 284 27 283 36 V54 A10 10 0 0 1 263 54 V36 C262 28 252 26 240 26 H200 C196 26 197 28 197 33 V40 A6 6 0 0 1 185 40 V33 C185 28 180 26 170 26 H120 C112 26 117 29 117 38 V62 A11 11 0 0 1 95 62 V38 C95 29 88 26 75 26 H50 C40 26 41 28 41 32 V44 A5.5 5.5 0 0 1 30 44 V32 C30 28 26 26 20 26 H0 Z"/>
+      <path class="drip-honey" d="M0 0 H300 V26 C292 26 284 27 283 36 V54 A10 10 0 0 1 263 54 V36 C262 28 252 26 240 26 H200 C196 26 197 28 197 33 V40 A6 6 0 0 1 185 40 V33 C185 28 180 26 170 26 H120 C112 26 117 29 117 38 V62 A11 11 0 0 1 95 62 V38 C95 29 88 26 75 26 H50 C40 26 41 28 41 32 V44 A5.5 5.5 0 0 1 30 44 V32 C30 28 26 26 20 26 H0 Z"/>
+      <ellipse cx="101" cy="61" rx="2.5" ry="4.5" fill="#fff" fill-opacity=".45"/>
+      <ellipse cx="268" cy="53" rx="2.2" ry="4" fill="#fff" fill-opacity=".45"/>
+      <ellipse cx="189" cy="40" rx="1.5" ry="2.5" fill="#fff" fill-opacity=".45"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="84" fill="url(#drip-tile)"/>
+</svg>
+
 <div class="wrap">
-  <header>
-    <span class="eyebrow">The most anticipated event of the year is coming on the first weeks of December 2026 · South Brisbane</span>
-    <h1>Our December baby registry</h1>
-    <p class="lede">Thank you for helping us get ready. When you choose a gift, tap <strong>I'm getting this</strong> so nobody doubles up.</p>
-    <div class="progress" aria-live="polite">
-      <div class="bar"><span id="bar"></span></div>
-      <p id="count">Loading what's already selected…</p>
+  <header class="hero">
+    <div class="hero-text">
+      <p class="script">A little hunny is on the way</p>
+      <h1>Our Franca baby girl registry</h1>
+      <span class="eyebrow">Get ready! The most anticipated event of the year arrives in the first weeks of December 2026</span>
+      <p class="lede">Thank you for helping us get ready. When you choose a gift, tap <strong>[I'm getting this]</strong> so nobody doubles up.</p>
     </div>
-    <p class="who" id="who" hidden>Marking gifts as <strong id="who-name"></strong> ·<button class="link" type="button" id="who-change">Change name</button></p>
-    <p class="notice" id="notice" hidden></p>
+    <div class="hero-art">
+      <svg viewBox="0 0 220 200" role="img" aria-label="A honey pot with a red balloon and buzzing bees">
+        <path class="flight" d="M84 26 C 98 0 112 34 130 21"/>
+        <path class="flight" d="M216 100 C 222 84 204 80 210 64"/>
+        <g class="balloon">
+          <path class="string" d="M58 93 C 48 120 74 142 62 178"/>
+          <ellipse class="balloon-body" cx="58" cy="52" rx="30" ry="36"/>
+          <path class="balloon-body" d="M53 87 h10 l-5 7 z"/>
+          <ellipse cx="47" cy="40" rx="7" ry="12" transform="rotate(-22 47 40)" fill="#fff" fill-opacity=".35"/>
+        </g>
+        <g transform="translate(96 72)">
+          <path class="pot" d="M30 40 C 12 54 12 94 30 106 C 46 116 74 116 90 106 C 108 94 108 54 90 40 Z"/>
+          <path d="M30 58 C 24 72 26 90 34 100" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="5" stroke-linecap="round"/>
+          <g transform="rotate(-5 60 77)">
+            <rect class="label" x="33" y="64" width="54" height="26" rx="3"/>
+            <text class="label-text" x="60" y="83" text-anchor="middle">HUNNY</text>
+          </g>
+          <rect class="pot-rim" x="26" y="30" width="68" height="14" rx="7"/>
+          <ellipse class="hny" cx="60" cy="31" rx="30" ry="9"/>
+          <path class="hny" d="M40 32 V48 a4.5 4.5 0 0 0 9 0 V32 Z M70 32 V58 a5 5 0 0 0 10 0 V32 Z"/>
+          <ellipse cx="50" cy="28" rx="9" ry="2.5" fill="#fff" fill-opacity=".4"/>
+        </g>
+        <g class="bee-a"><use href="#bee" x="128" y="4" width="40" height="32"/></g>
+        <g class="bee-b"><g transform="translate(214 44) scale(-1 1)"><use href="#bee" width="30" height="24"/></g></g>
+        <g class="bee-c"><use href="#bee" x="4" y="122" width="26" height="21"/></g>
+      </svg>
+    </div>
+    <div class="hero-status">
+      <div class="progress" aria-live="polite">
+        <div class="bar"><span id="bar"></span></div>
+        <p id="count">Loading what's already selected…</p>
+      </div>
+      <p class="who" id="who" hidden>Marking gifts as <strong id="who-name"></strong> ·<button class="link" type="button" id="who-change">Change name</button></p>
+      <p class="notice" id="notice" hidden></p>
+    </div>
   </header>
 
   <section aria-labelledby="h-other">
@@ -143,7 +293,10 @@ dialog input:focus-visible { outline: 3px solid var(--accent); outline-offset: 1
     <ul class="items" id="list-amazon"></ul>
   </section>
 
-  <footer>Prices checked 19 October 2026 and may change.</footer>
+  <footer>
+    <p class="made">Made with hunny &amp; love</p>
+    <p>Mani y Mono</p>
+  </footer>
 </div>
 <div id="toast" role="status" hidden></div>
 
