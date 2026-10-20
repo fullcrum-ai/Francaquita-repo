@@ -405,7 +405,7 @@ function rowFor(item) {
   link.href = item.group === "amazon" ? AMAZON : item.url;
   link.target = "_blank"; link.rel = "noopener";
   link.textContent = item.group === "amazon" ? "Buy on our Amazon registry" : "Buy at " + item.store;
-  meta.append(price, link);
+  meta.append(link);
   info.append(name, desc, meta);
 
   const actions = document.createElement("div"); actions.className = "actions";
